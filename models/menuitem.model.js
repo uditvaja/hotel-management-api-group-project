@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 let menuItemSchema = new mongoose.Schema({
-    menu_item_id :{
+    menu_id :{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Menu"
     },

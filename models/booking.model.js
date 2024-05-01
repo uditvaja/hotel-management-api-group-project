@@ -20,10 +20,6 @@ let bookingSchema = new mongoose.Schema({
     person: {
         type: Number,
         required: true
-    },
-    order_menu_id :{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "OrderMenu"
     }
 })
 

@@ -1,7 +1,11 @@
 import express from "express"
-import { getBooking } from "../controllers/booking.controller.js"
+import { deleteBooking, getBooking, getBookings, postBooking, putBooking } from "../controllers/booking.controller.js"
 let bookingRoutes = express()
 
-bookingRoutes.get('/', getBooking);
+bookingRoutes.get('/', getBookings);
+bookingRoutes.get('/:id', getBooking);
+bookingRoutes.post('/', postBooking);
+bookingRoutes.put('/:id', putBooking);
+bookingRoutes.delete('/:id', deleteBooking);
 
 export default bookingRoutes;
