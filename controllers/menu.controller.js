@@ -1,5 +1,3 @@
-
-
 import { MenuModel } from "../models/menu.model.js";
 
 export const getMenus = async (req, res) => {

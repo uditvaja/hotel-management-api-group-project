@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 let userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        unique : true
     },
     password: {
         type: String,
@@ -11,7 +12,8 @@ let userSchema = new mongoose.Schema({
     },
     customer_id :{
         type: mongoose.Schema.Types.ObjectId,
-        ref : "Customer"
+        ref : "Customer",
+        required : false
     }
 })
 

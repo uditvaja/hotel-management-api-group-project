@@ -3,15 +3,15 @@ import mongoose from "mongoose";
 let  customerSchema = new mongoose.Schema({
     first_name :{
         type : String,
-        required : true
+        required : false
     },
     last_name:{
         type : String,
-        required : true
+        required : false
     },
     phone_number:{
         type : String,
-        required : true
+        required : false
     },
     email:{
         type : String,

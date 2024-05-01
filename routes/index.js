@@ -10,6 +10,8 @@ import orderMenuRoutes from "./ordermenu.routes.js";
 import staffRoutes from "./staff.routes.js";
 import menuIngredientsRoutes from "./menuingredients.routes.js";
 import menuItemRoutes from "./menuitem.routes.js";
+import userRoutes from "./user.routes.js";
+import { authLogin } from "../middlewares/auth.middleware.js";
 let routes = express()
 
 routes.get('/', (req, res) => {
@@ -26,5 +28,6 @@ routes.use('/order', orderRoutes)
 routes.use('/ordermenu', orderMenuRoutes)
 routes.use('/staff', staffRoutes)
 routes.use('/menuitem', menuItemRoutes)
+routes.use('/auth', userRoutes)
 
 export default routes

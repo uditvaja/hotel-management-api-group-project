@@ -1,5 +1,7 @@
 
 
+import { MenuIngredientsModel } from "../models/menuingredients.model.js";
+import { MenuItemModel } from "../models/menuitem.model.js";
 import { OrderMenuModel } from "../models/ordermenu.model.js";
 
 export const getOrderMenus = async (req, res) => {
@@ -91,6 +93,64 @@ export const deleteOrderMenu = async (req, res) => {
         await OrderMenuModel.findByIdAndDelete(id);
         res.json({ message: "OrderMenu Delete Successfully" })
     } catch (error) {
+        res.status(500).json({ error: "Server Error" });
+    }
+}
+
+export const userOrderMenu = async (req, res) => {
+
+    try {
+
+        let { comments, quantity, menu } = req.body;
+        let menuItemArr = [];
+
+        try {
+            for (let e of menu) {
+                let arr = [];
+                 for (const element of e.ingredients) {
+                    try {
+                        let menuIngredients = new MenuIngredientsModel({
+                            ingredients_id: element.ingredients_id,
+                            quantity: element.quantity
+                        });
+
+                        let a = await menuIngredients.save();
+                        arr.push(a._id);
+                    } catch (error) {
+                        res.status(500).json({ error: "Server Error" });
+                    }
+                }
+
+                try {
+                    let menuItem = new MenuItemModel({
+                        menu_ingredients_id: arr,
+                        menu_id: e.menu_id
+                    });
+                    let b = await menuItem.save();
+                    menuItemArr.push(b._id);
+                } catch (error) {
+                    res.status(500).json({ error: "Server Error" });
+                }
+            }
+        } catch (error) {
+            res.status(500).json({ error: "Server Error" });
+        }
+
+
+        let orderMenu = new OrderMenuModel({
+            comments,
+            quantity,
+            menu_item_id: menuItemArr
+        })
+        let c = await orderMenu.save()
+        if (c) {
+            res.json({ message: "OrderMenu Add Successfully" })
+        } else {
+            res.status(500).json({ error: "Server Error" });
+        }
+
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "Server Error" });
     }
 }
