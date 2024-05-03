@@ -29,13 +29,14 @@ export const getStaffRole = async (req, res) => {
 }
 export const postStaffRole = async (req, res) => {
     try {
-        let { role_description ,role} = req.body
+        let { role_description ,role ,role_access} = req.body
         let data = new StaffRoleModel({
-            role_description ,role
+            role_description ,role , role_access
         })
         await data.save();
         res.json({ message: "StaffRole Successfully" })
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "Server Error" });
     }
 }

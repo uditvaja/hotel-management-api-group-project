@@ -10,6 +10,11 @@ import orderMenuRoutes from "./ordermenu.routes.js";
 import staffRoutes from "./staff.routes.js";
 import menuIngredientsRoutes from "./menuingredients.routes.js";
 import menuItemRoutes from "./menuitem.routes.js";
+import userRoutes from "./user.routes.js";
+import { authLogin } from "../middlewares/auth.middleware.js";
+import { staffAuthLogin } from "../middlewares/staffauth.middleware.js";
+import { roleService } from "../services/role.service.js";
+
 let routes = express()
 
 routes.get('/', (req, res) => {
@@ -17,14 +22,15 @@ routes.get('/', (req, res) => {
 });
 routes.use('/booking', bookingRoutes)
 routes.use('/customer', customerRoutes)
-routes.use('/table', tableRoutes)
-routes.use('/staffrole', staffRoleRoutes)
-routes.use('/ingredients', ingredientsRoutes)
+routes.use('/table',staffAuthLogin ,roleService, tableRoutes)
+routes.use('/staffrole',staffAuthLogin ,roleService, staffRoleRoutes)
+routes.use('/ingredients',staffAuthLogin ,roleService, ingredientsRoutes)
 routes.use('/menu', menuRoutes)
 routes.use('/menuingredients', menuIngredientsRoutes)
 routes.use('/order', orderRoutes)
 routes.use('/ordermenu', orderMenuRoutes)
-routes.use('/staff', staffRoutes)
+routes.use('/staff',staffAuthLogin ,roleService, staffRoutes)
 routes.use('/menuitem', menuItemRoutes)
+routes.use('/auth', userRoutes)
 
 export default routes

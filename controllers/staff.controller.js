@@ -1,6 +1,9 @@
 
 
+import { StaffAuthModel } from "../models/staff.auth.model.js";
 import { StaffModel } from "../models/staff.model.js";
+import bcrypt from "bcrypt";
+
 
 export const getStaffs = async (req, res) => {
     try {
@@ -29,13 +32,26 @@ export const getStaff = async (req, res) => {
 }
 export const postStaff = async (req, res) => {
     try {
-        let { first_name, last_name, role_id} = req.body
+        let { first_name, last_name, role_id, email, password } = req.body
         let data = new StaffModel({
             first_name, last_name, role_id
         })
         await data.save();
-        res.json({ message: "Staff Successfully" })
+
+        let saltRounds = 11;
+        if (data._id) {
+
+            bcrypt.hash(password, saltRounds, async (err, hash) => {
+                let staffUser = new StaffAuthModel({
+                    email, password: hash, staff_id: data._id
+                })
+                await staffUser.save();
+            })
+
+            res.json({ message: "Staff add Successfully" })
+        }
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "Server Error" });
     }
 }
