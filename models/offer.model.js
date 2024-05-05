@@ -1,9 +1,12 @@
-
 import mongoose from 'mongoose';
 
 const offerSchema = new mongoose.Schema({
     name: {
         type: String,
+        required: true
+    },
+    description: {
+        type: String, 
         required: true
     },
     discount: {
@@ -18,7 +21,6 @@ const offerSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'OfferMain'
     }
-
 });
 
 const OfferModel = mongoose.model('Offer', offerSchema);

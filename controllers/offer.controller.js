@@ -26,8 +26,8 @@ export const getOffer = async (req, res) => {
 
 export const postOffer = async (req, res) => {
     try {
-        const { name, discount, validity, offermain } = req.body;
-        const newOffer = new OfferModel({ name, discount, validity, offermain });
+        const { name, description, discount, validity, offermain } = req.body; // Added description here
+        const newOffer = new OfferModel({ name, description, discount, validity, offermain }); // Added description here
         await newOffer.save();
         res.status(201).json({ message: "Offer created successfully", data: newOffer });
     } catch (error) {
@@ -39,8 +39,8 @@ export const postOffer = async (req, res) => {
 export const putOffer = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, discount, validity, offermain } = req.body;
-        const updatedOffer = await OfferModel.findByIdAndUpdate(id, { name, discount, validity, offermain }, { new: true });
+        const { name, description, discount, validity, offermain } = req.body; // Added description here
+        const updatedOffer = await OfferModel.findByIdAndUpdate(id, { name, description, discount, validity, offermain }, { new: true }); // Added description here
         if (!updatedOffer) {
             return res.status(404).json({ error: "Offer not found" });
         }
