@@ -16,6 +16,7 @@ import { staffAuthLogin } from "../middlewares/staffauth.middleware.js";
 import { roleService } from "../services/role.service.js";
 import serviceRoutes from "./serviceroutes.js";
 import onlineorderRoutes from "./onlineorder.router.js";
+import ratingRoutes from "./rating.routes.js";
 
 let routes = express()
 
@@ -36,5 +37,6 @@ routes.use('/staff',staffAuthLogin ,roleService, staffRoutes)
 routes.use('/menuitem', menuItemRoutes)
 routes.use('/auth', userRoutes)
 routes.use('/service', serviceRoutes);
+routes.use('/rating', ratingRoutes)
 
 export default routes
