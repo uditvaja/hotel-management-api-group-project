@@ -21,6 +21,8 @@ import customerRewardsRoutes from "./customerRewards.routes.js";
 import userVoucherRoutes from "./userVoucher.routes.js";
 import voucherRoutes from "./voucher.routes.js";
 import rewardRoutes from "./reward.routes.js";
+import orderTrackingRouter from "./ordertracking.js";
+
 
 
 let routes = express()
@@ -48,5 +50,6 @@ routes.use('/voucher', voucherRoutes)
 routes.use('/uservoucher', userVoucherRoutes)
 routes.use('/customerRewards', customerRewardsRoutes)
 routes.use('/reward', rewardRoutes)
+
 
 export default routes
