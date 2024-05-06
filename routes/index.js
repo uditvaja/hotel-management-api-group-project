@@ -14,7 +14,16 @@ import userRoutes from "./user.routes.js";
 import { authLogin } from "../middlewares/auth.middleware.js";
 import { staffAuthLogin } from "../middlewares/staffauth.middleware.js";
 import { roleService } from "../services/role.service.js";
+import serviceRoutes from "./serviceroutes.js";
+import onlineorderRoutes from "./onlineorder.router.js";
+import ratingRoutes from "./rating.routes.js";
+import customerRewardsRoutes from "./customerRewards.routes.js";
+import userVoucherRoutes from "./userVoucher.routes.js";
+import voucherRoutes from "./voucher.routes.js";
+import rewardRoutes from "./reward.routes.js";
 import orderTrackingRouter from "./ordertracking.js";
+
+
 
 let routes = express()
 
@@ -30,9 +39,17 @@ routes.use('/menu', menuRoutes)
 routes.use('/menuingredients', menuIngredientsRoutes)
 routes.use('/order', orderRoutes)
 routes.use('/ordermenu', orderMenuRoutes)
+routes.use('/onlineorder', onlineorderRoutes)
 routes.use('/staff',staffAuthLogin ,roleService, staffRoutes)
 routes.use('/menuitem', menuItemRoutes)
 routes.use('/auth', userRoutes)
-routes.use('/orderstatus',orderTrackingRouter);
+routes.use('/service', serviceRoutes);
+routes.use('/rating', ratingRoutes)
+
+routes.use('/voucher', voucherRoutes)
+routes.use('/uservoucher', userVoucherRoutes)
+routes.use('/customerRewards', customerRewardsRoutes)
+routes.use('/reward', rewardRoutes)
+
 
 export default routes
