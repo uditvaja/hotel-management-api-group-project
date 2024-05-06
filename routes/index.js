@@ -17,6 +17,11 @@ import { roleService } from "../services/role.service.js";
 import serviceRoutes from "./serviceroutes.js";
 import onlineorderRoutes from "./onlineorder.router.js";
 import ratingRoutes from "./rating.routes.js";
+import customerRewardsRoutes from "./customerRewards.routes.js";
+import userVoucherRoutes from "./userVoucher.routes.js";
+import voucherRoutes from "./voucher.routes.js";
+import rewardRoutes from "./reward.routes.js";
+
 
 let routes = express()
 
@@ -38,5 +43,10 @@ routes.use('/menuitem', menuItemRoutes)
 routes.use('/auth', userRoutes)
 routes.use('/service', serviceRoutes);
 routes.use('/rating', ratingRoutes)
+
+routes.use('/voucher', voucherRoutes)
+routes.use('/uservoucher', userVoucherRoutes)
+routes.use('/customerRewards', customerRewardsRoutes)
+routes.use('/reward', rewardRoutes)
 
 export default routes
