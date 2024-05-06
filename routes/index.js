@@ -15,6 +15,7 @@ import { authLogin } from "../middlewares/auth.middleware.js";
 import { staffAuthLogin } from "../middlewares/staffauth.middleware.js";
 import { roleService } from "../services/role.service.js";
 import serviceRoutes from "./serviceroutes.js";
+import onlineorderRoutes from "./onlineorder.router.js";
 
 let routes = express()
 
@@ -30,6 +31,7 @@ routes.use('/menu', menuRoutes)
 routes.use('/menuingredients', menuIngredientsRoutes)
 routes.use('/order', orderRoutes)
 routes.use('/ordermenu', orderMenuRoutes)
+routes.use('/onlineorder', onlineorderRoutes)
 routes.use('/staff',staffAuthLogin ,roleService, staffRoutes)
 routes.use('/menuitem', menuItemRoutes)
 routes.use('/auth', userRoutes)
