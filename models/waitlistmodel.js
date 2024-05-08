@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+
 
 const waitlistSchema = new mongoose.Schema({
   name: {
@@ -14,11 +15,10 @@ const waitlistSchema = new mongoose.Schema({
     required: false
   },
   joinTime: {
-    type: Date,
-    default: Date.now
+    type: String
   },
   estimatedWaitTime: {
-    type: Number,
+    type: String,
     required: true
   },
   notified: {
@@ -28,6 +28,4 @@ const waitlistSchema = new mongoose.Schema({
 });
 
 
-const Waitlist = mongoose.model('Waitlist', waitlistSchema);
-
-module.exports = Waitlist;
+export const Waitlist = mongoose.model('Waitlist', waitlistSchema);

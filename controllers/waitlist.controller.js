@@ -1,75 +1,60 @@
-import { waitlist } from "../models/waitlistmodel.js";
+import { Waitlist } from "../models/waitlistmodel.js";
 
 export const getwaitlists = async (req, res) => {
-    try {
-        const waitlist = await Waitlist.find();
-        res.json(waitlist);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server Error' });
-    }
+     try {
+          const waitlist = await Waitlist.find({});
+          res.json({ message: "Get WaitLists Successfully", data: waitlist })
+     } catch (err) {
+          res.status(500).json({ message: 'Server Error' });
+     }
 
 }
-export const postwaitlist = async (req, res) => { 
-    try{
-        if (!req.body.name) {
+export const postwaitlist = async (req, res) => {
+     try {
+          let {name, phone, partysize, joinTime, estimatedWaitTime, notified} = req.body;
 
-             return res.status(422).json({error: 'name feild is requried'})
-        }
+          const data = new Waitlist({
+               name, phone, partysize, joinTime, estimatedWaitTime, notified
+          })
 
-        if (!req.body.phone) {
+          await data.save();
+          res.json({ message: "post WaitList Successfully" })
 
-             return res.status(422).json({error: 'phone feild is requried'})
-        }
-
-       const newwaitlist = await waitlist.create(req.body)
-       return res.status(201).json(newwaitlist)
-   } catch(error) {
-        return res.status(500).json({error: error.message}) 
-   }
+     } catch (error) {
+          console.log(error);
+          return res.status(500).json({ error: 'Server Error' })
+     }
 }
-export const getwaitlist = async (req, res) => { 
-    try{
-        if(!mongoose.isValidObjectId(req.params.id)){
-             return res.status(422).json({error: 'parameter is not valid id'})
-        }
-        const waitlist = await waitlist.findById(req.params.id)
-        if(!waitlist){
-             return response.status(404).json({error: 'waitlist not found'})
-        }
-        return res.status(200).json(waitlist)   
-   }catch (error){
-        return res.status(500).json({error: error.message})  
-   }
+export const getwaitlist = async (req, res) => {
+     try {
+          const waitlist = await Waitlist.findById({ _id : req.params.id})
+          if (!waitlist) {
+               return response.status(404).json({ error: 'waitlist not found' })
+          }
+          res.json({ message: "Get WaitList Successfully", data: waitlist })
+     } catch (error) {
+          return res.status(500).json({ error: 'server error' })
+     }
 }
 export const putwaitlist = async (req, res) => {
-    try{
-        if (!mongoose.isValidObjectId(req.params.id)){
-             return res.status(422).json({error: 'parameter is not valid id'})
-        }
+     try {
+          await Waitlist.findByIdAndUpdate(req.params.id, req.body)
 
-        if (!await waitlist.exists({_id: req.params.id})){
-             return res.status(422).json({error: 'waitlist not found'})
-        }
-    const waitlistupdated = await waitlist.findByIdAndUpdate(req.params.id, req.body, {new: true})
+          res.json({ message: "update WaitList Successfully" })
 
-    return res.status(200).json(waitlistupdated)
-
-   }catch(error) {
-        return res.status(500).json({error: error.message})
-   }
+     } catch (error) {
+          return res.status(500).json({ error: 'server error' })
+     }
 }
 export const deletewaitlist = async (req, res) => {
-    try{
-        if(!mongoose .isValidObjectId(req.params.id)){
-           return res.status(422).json({error: 'parameter is not valid id'})
-        }
-        await waitlist.findByIdAndDelete(req.params.id)
+     try {
 
-        return res.status(204).send()
+          await Waitlist.findByIdAndDelete(req.params.id)
+
+          res.json({ message: "Delete WaitList Successfully" })
 
 
-   }catch(error){
-        return res.status(500).json({error: 'error.message'})
-   }
+     } catch (error) {
+          return res.status(500).json({ error: 'server error' })
+     }
 }

@@ -1,18 +1,13 @@
 import express from "express";
-import {
-    getOrderTracking,
-    getOrderTrackingById,
-    createOrderTracking,
-    updateOrderTracking,
-    deleteOrderTracking
-} from "../controllers/ordertracking.controller.js";
+import { deleteOrderTracking, getOrderTracking, getOrdersTracking, postOrderTracking, putOrderTracking } from "../controllers/ordertracking.controller.js";
+
 
 let orderTrackingRouter = express.Router();
 
-orderTrackingRouter.get('/', getOrderTracking);
-orderTrackingRouter.get('/:id', getOrderTrackingById);
-orderTrackingRouter.post('/', createOrderTracking);
-orderTrackingRouter.put('/:id', updateOrderTracking);
+orderTrackingRouter.get('/', getOrdersTracking);
+orderTrackingRouter.get('/:id', getOrderTracking);
+orderTrackingRouter.post('/', postOrderTracking);
+orderTrackingRouter.put('/:id', putOrderTracking);
 orderTrackingRouter.delete('/:id', deleteOrderTracking);
 
 export default orderTrackingRouter;

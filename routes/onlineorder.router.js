@@ -1,6 +1,5 @@
 import express from "express"
-import { getOrders, postOrder } from "../controllers/onlineorder.controller.js";
-import { deleteOrder, getOrder, putOrder } from "../controllers/order.controller.js";
+import { getOrders, postOrder , deleteOrder, getOrder, putOrder } from "../controllers/onlineorder.controller.js";
 const onlineorderRoutes = express()
 
 onlineorderRoutes.get("/", getOrders)

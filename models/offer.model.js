@@ -17,10 +17,10 @@ const offerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    offermain:{
+    menu_id :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'OfferMain'
-    }
+        ref: "Menu"
+    },
 });
 
 const OfferModel = mongoose.model('Offer', offerSchema);

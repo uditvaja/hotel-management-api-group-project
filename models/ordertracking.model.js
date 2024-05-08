@@ -2,9 +2,9 @@
 import mongoose from "mongoose";
 
 let ordertrackingSchema = new mongoose.Schema({
-    order_id: {
+    online_order_id :{
         type: mongoose.Schema.Types.ObjectId,
-        // ref: "online_order_id"
+        ref: "OnlineOrder"
     },
     orderdone: {
         type: String,

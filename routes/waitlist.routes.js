@@ -8,4 +8,4 @@ waitlistRoutes.post('/', postwaitlist);
 waitlistRoutes.put('/:id', putwaitlist);
 waitlistRoutes.delete('/:id', deletewaitlist);
 
-export default waitlistRoutesRoutes;
+export default waitlistRoutes;

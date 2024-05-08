@@ -3,7 +3,7 @@ import { RewardModel } from "../models/reward.model.js";
 
 export const getRewards = async (req, res) => {
     try {
-        await RewardModel.find({}).then((data) => {
+        await RewardModel.find({}).populate('customer_id').then((data) => {
             res.json({ message: "Rewards Get Successfully", data })
         }).catch((err) => {
             console.log(err);
@@ -16,7 +16,7 @@ export const getRewards = async (req, res) => {
 export const getReward = async (req, res) => {
     try {
         let { id } = req.params
-        await RewardModel.find({ _id: id }).then((data) => {
+        await RewardModel.find({ _id: id }).populate('customer_id').then((data) => {
             res.json({ message: "Reward Get Successfully", data })
         }).catch((err) => {
             console.log(err);
@@ -28,10 +28,9 @@ export const getReward = async (req, res) => {
 }
 export const postReward = async (req, res) => {
     try {
-        let {order_id,rewardAmount} = req.body
+        let {rewardAmount, customer_id} = req.body
         let data = new RewardModel({
-            order_id,
-            rewardAmount,
+            rewardAmount, customer_id
         })
         await data.save();
         res.json({ message: "Reward Successfully" })
@@ -52,7 +51,7 @@ export const putReward = async (req, res) => {
 export const deleteReward = async (req, res) => {
     try {
         let { id } = req.params
-        await VoucherModel.findByIdAndDelete(id);
+        await RewardModel.findByIdAndDelete(id);
         res.json({ message: "Reward Delete Successfully" })
     } catch (error) {
         res.status(500).json({ error: "Server Error" });

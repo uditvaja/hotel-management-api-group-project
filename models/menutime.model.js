@@ -1,8 +1,6 @@
-// const mongoose = require('mongoose');
 import mongoose from 'mongoose';
 
-
-const serviceschema = new mongoose.Schema({
+const menuTimeschema = new mongoose.Schema({
     time: {
         type: String,
         required: false
@@ -15,4 +13,4 @@ const serviceschema = new mongoose.Schema({
 });
 
 
-export const servicemodel =mongoose.model("service",serviceschema);
+export const MenuTimeModel =mongoose.model("MenuTime",menuTimeschema);

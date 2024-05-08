@@ -3,7 +3,7 @@ import { UserVoucherModel } from "../models/userVoucher.model.js";
 
 export const getUserVouchers = async (req, res) => {
     try {
-        await UserVoucherModel.find({}).then((data) => {
+        await UserVoucherModel.find({}).populate('voucher_id').populate('customer_id').then((data) => {
             res.json({ message: "UserVoucher Get Successfully", data })
         }).catch((err) => {
             console.log(err);
@@ -16,7 +16,7 @@ export const getUserVouchers = async (req, res) => {
 export const getUserVoucher = async (req, res) => {
     try {
         let { id } = req.params
-        await UserVoucherModel.find({ _id: id }).then((data) => {
+        await UserVoucherModel.find({ _id: id }).populate('voucher_id').populate('customer_id').then((data) => {
             res.json({ message: "UserVoucher Get Successfully", data })
         }).catch((err) => {
             console.log(err);
@@ -28,13 +28,12 @@ export const getUserVoucher = async (req, res) => {
 }
 export const postUserVoucher = async (req, res) => {
     try {
-        let {customer_id,order_id,voucher_id,expirationDate,isActive} = req.body
+        let {voucher_id,expirationDate,isActive , customer_id} = req.body
         let data = new UserVoucherModel({
-            customer_id,
-            order_id,
             voucher_id,
             expirationDate,
             isActive,
+            customer_id
         })
         await data.save();
         res.json({ message: "UserVoucher Successfully" })

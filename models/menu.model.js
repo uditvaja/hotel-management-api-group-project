@@ -12,6 +12,10 @@ let menuSchema = new mongoose.Schema({
     price: {
         type: String,
         required: true
+    },
+    category_id :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref : "Category"
     }
 })
 

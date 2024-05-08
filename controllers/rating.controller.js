@@ -2,7 +2,7 @@ import { RatingModel } from "../models/rating.model.js";
 
 export const getRatings = async (req, res) => {
     try {
-        const ratings = await RatingModel.find({});
+        const ratings = await RatingModel.find({}).populate('customer_id');
         res.json({ message: "Ratings fetched successfully", data: ratings });
     } catch (error) {
         console.error(error);
@@ -13,7 +13,7 @@ export const getRatings = async (req, res) => {
 export const getRating = async (req, res) => {
     try {
         const { id } = req.params;
-        const rating = await RatingModel.findById(id);
+        const rating = await RatingModel.findById({_id : id}).populate('customer_id');
         if (!rating) {
             return res.status(404).json({ error: "Rating not found" });
         }
@@ -26,8 +26,8 @@ export const getRating = async (req, res) => {
 
 export const createRating = async (req, res) => {
     try {
-        const { value, comment, staff_id, menu_item_id, customer_id } = req.body;
-        const newRating = new RatingModel({ value, comment, staff_id, menu_item_id, customer_id });
+        const { value, comment, customer_id } = req.body;
+        const newRating = new RatingModel({ value, comment, customer_id });
         await newRating.save();
         res.status(201).json({ message: "Rating created successfully" });
     } catch (error) {

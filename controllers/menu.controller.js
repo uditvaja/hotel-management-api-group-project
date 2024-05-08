@@ -2,7 +2,7 @@ import { MenuModel } from "../models/menu.model.js";
 
 export const getMenus = async (req, res) => {
     try {
-        await MenuModel.find({}).then((data) => {
+        await MenuModel.find({}).populate('category_id').then((data) => {
             res.json({ message: "Menus Get Successfully", data })
         }).catch((err) => {
             console.log(err);
@@ -15,7 +15,7 @@ export const getMenus = async (req, res) => {
 export const getMenu = async (req, res) => {
     try {
         let { id } = req.params
-        await MenuModel.find({ _id: id }).then((data) => {
+        await MenuModel.find({ _id: id }).populate('category_id').then((data) => {
             res.json({ message: "Menu Get Successfully", data })
         }).catch((err) => {
             console.log(err);
@@ -27,9 +27,9 @@ export const getMenu = async (req, res) => {
 }
 export const postMenu = async (req, res) => {
     try {
-        let { price , title, description} = req.body
+        let { price , title, description , category_id} = req.body
         let data = new MenuModel({
-            price , title, description
+            price , title, description ,category_id
         })
         await data.save();
         res.json({ message: "Menu Successfully" })

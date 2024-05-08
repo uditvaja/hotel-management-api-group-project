@@ -8,22 +8,10 @@ const ratingSchema = new mongoose.Schema({
         min: 1,
         max: 5
     },
-    comment: String,
-    staff_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Staff"
-    },
-    menu_item_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "MenuItem"
-    },
+    comment: {type : String},
     customer_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Customer"
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
     }
 });
 

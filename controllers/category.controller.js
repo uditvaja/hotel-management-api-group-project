@@ -1,75 +1,55 @@
-import { category } from "../models/cetegories.js";
+import { Category } from "../models/categories.js";
 
 export const getcategorys = async (req, res) => {
-    try {
-        const category = await category.find();
-        res.json(category);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server Error' });
-    }
+     try {
+          const category = await Category.find();
+          res.json({ message: "Get Category Successfully", data: category })
+     } catch (err) {
+          console.log(err);
+          res.status(500).json({ message: 'Server Error' });
+     }
 
 }
-export const postcategory = async (req, res) => { 
-    try{
-        if (!req.body.name) {
+export const postcategory = async (req, res) => {
+     try {
+          let { name, description } = req.body;
 
-             return res.status(422).json({error: 'name feild is requried'})
-        }
-
-        if (!req.body.description) {
-
-             return res.status(422).json({error: 'description feild is requried'})
-        }
-
-       const newcategory = await category.create(req.body)
-       return res.status(201).json(newcategory)
-   } catch(error) {
-        return res.status(500).json({error: error.message}) 
-   }
+          const newcategory = new Category({
+               name, description
+          })
+          await newcategory.save();
+          res.json({ message: "Create Category Successfully" })
+     } catch (error) {
+          console.log(error);
+          res.status(500).json({ message: 'Server Error' });
+     }
 }
-export const getcategory = async (req, res) => { 
-    try{
-        if(!mongoose.isValidObjectId(req.params.id)){
-             return res.status(422).json({error: 'parameter is not valid id'})
-        }
-        const category = await category.findById(req.params.id)
-        if(!category){
-             return response.status(404).json({error: 'category not found'})
-        }
-        return res.status(200).json(category)   
-   }catch (error){
-        return res.status(500).json({error: error.message})  
-   }
+export const getcategory = async (req, res) => {
+     try {
+          const category = await Category.findById({_id : req.params.id})
+          res.json({ message: "Get Category Successfully", data: category })
+     } catch (error) {
+          res.status(500).json({ message: 'Server Error' });
+     }
 }
 export const putcategory = async (req, res) => {
-    try{
-        if (!mongoose.isValidObjectId(req.params.id)){
-             return res.status(422).json({error: 'parameter is not valid id'})
-        }
+     try {
+          await Category.findByIdAndUpdate(req.params.id, req.body)
 
-        if (!await category.exists({_id: req.params.id})){
-             return res.status(422).json({error: 'category not found'})
-        }
-    const Categoryupdated = await category.findByIdAndUpdate(req.params.id, req.body, {new: true})
+          res.json({ message: "Update Category Successfully" })
 
-    return res.status(200).json(Categoryupdated)
-
-   }catch(error) {
-        return res.status(500).json({error: error.message})
-   }
+     } catch (error) {
+          res.status(500).json({ message: 'Server Error' });
+     }
 }
 export const deletecategory = async (req, res) => {
-    try{
-        if(!mongoose .isValidObjectId(req.params.id)){
-           return res.status(422).json({error: 'parameter is not valid id'})
-        }
-        await category.findByIdAndDelete(req.params.id)
+     try {
+          
+          await Category.findByIdAndDelete(req.params.id)
 
-        return res.status(204).send()
+          res.json({ message: "Delete Category Successfully"})
 
-
-   }catch(error){
-        return res.status(500).json({error: 'error.message'})
-   }
+     } catch (error) {
+          res.status(500).json({ message: 'Server Error' });
+     }
 }

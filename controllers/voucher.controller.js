@@ -27,12 +27,9 @@ export const getVoucher = async (req, res) => {
 }
 export const postVoucher = async (req, res) => {
     try {
-        let {order_id,amount,expirationDate,isActive} = req.body
+        let {title,amount,description} = req.body
         let data = new VoucherModel({
-            order_id,
-            amount,
-            expirationDate,
-            isActive,
+            title,amount,description
         })
         await data.save();
         res.json({ message: "Voucher Successfully" })

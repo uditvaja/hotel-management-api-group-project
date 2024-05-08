@@ -1,13 +1,13 @@
-import OnlineOrderModel from "../models/onlineorder.js";
+import OnlineOrderModel from "../models/onlineorder.model.js";
 
 
- export let getOrders = async (req,res)=>{ 
+export let getOrders = async (req, res) => {
     try {
-         const orders =  await OnlineOrderModel.find({}).populate({
+        await OnlineOrderModel.find({}).populate({
             path: "order_menu_id",
             populate: {
                 path: "menu_item_id",
-                populate:  [
+                populate: [
                     {
                         path: "menu_ingredients_id",
                         populate: {
@@ -19,18 +19,19 @@ import OnlineOrderModel from "../models/onlineorder.js";
                     }
                 ]
             }
+        }).populate('customer_id').then((data) => {
+            res.json({ message: "Online Orders Get Successfully", data })
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: "Data Not Get" });
         })
 
-        console.log("orders===>",orders);
-         
-
-        
     } catch (error) {
         res.status(500).json({ error: "Server Error" });
     }
 
-     
-} 
+
+}
 
 
 export const getOrder = async (req, res) => {
@@ -38,10 +39,9 @@ export const getOrder = async (req, res) => {
         let { id } = req.params
         await OnlineOrderModel.find({ _id: id }).populate({
             path: "order_menu_id",
-            populate:
-            {
+            populate: {
                 path: "menu_item_id",
-                populate: [                     
+                populate: [
                     {
                         path: "menu_ingredients_id",
                         populate: {
@@ -53,7 +53,11 @@ export const getOrder = async (req, res) => {
                     }
                 ]
             }
-
+        }).populate('customer_id').then((data) => {
+            res.json({ message: "Online Order Get Successfully", data })
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: "Data Not Get" });
         })
     } catch (error) {
         res.status(500).json({ error: "Server Error" });
@@ -63,9 +67,9 @@ export const getOrder = async (req, res) => {
 
 export const postOrder = async (req, res) => {
     try {
-        let { cash , online ,  order_menu_id , customer_id } = req.body
+        let { cash, online, order_menu_id, customer_id } = req.body
         let data = new OnlineOrderModel({
-            cash,  order_menu_id , online , customer_id
+            cash, order_menu_id, online, customer_id
         })
         await data.save();
         res.json({ message: "Order Successfully" })

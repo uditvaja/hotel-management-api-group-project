@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const rewardSchema = new mongoose.Schema({
-    order_id :{
+    customer_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Order"
+        ref: "Customer",
     },
     rewardAmount: {
         type: Number,
